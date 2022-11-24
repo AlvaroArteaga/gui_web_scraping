@@ -251,7 +251,7 @@ class RightCheckbox(IRightBodyTouch, MDCheckbox):
 
 proceso_estado= [False,False,False,False,False,False,False]
 
-class Example(MDApp):
+class GWS_AA(MDApp):
     overlay_color = get_color_from_hex("#6042e4")
     
   
@@ -738,4 +738,4 @@ class Example(MDApp):
                 self.set_item_fn(self.root.ids.drop_item.current_item)
 
 
-Example().run()
+GWS_AA().run()
