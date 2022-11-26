@@ -30,17 +30,22 @@ from kivymd.uix.filemanager import MDFileManager
 import os
 from kivymd.toast import toast
 
-
-
+from ws import *
+from descarga_ifc import *  
+                                                                                                                                                                                                          
+#import importlib
+#from ..web_scraping.ws
+#addition = importlib.import_module('..web_scraping.ws').addition
+#import ultraimport
+#addition = ultraimport('..web_scraping.ws.py', 'addition')
+#from 'E:\GitHub\Coordinador_Electrico\2022\DBCD\web_scraping\ws.py' import
+MODO =False
+DESTINO=""
 Window.size = (470,700)
 
 
 
 KV = '''
-
-
-
-
 
 
 
@@ -266,8 +271,10 @@ class GWS_AA(MDApp):
 
         :param path: path to the selected directory or file;
         '''
+        global DESTINO
         self.exit_manager()
         toast(path)
+        DESTINO=path
         self.theme_cls.primary_palette = "Red"
 
     def exit_manager(self, *args):
@@ -680,10 +687,39 @@ class GWS_AA(MDApp):
         )
     
     def descargar(self):
-        pass
+        procesos=[]
+        for pro_sgte in range(0,7):
+            match pro_sgte:
+                case 0:
+                    if proceso_estado[pro_sgte]: procesos.append("BADX")
+                case 1:
+                    if proceso_estado[pro_sgte]: procesos.append("BAEN")
+                case 2:
+                    if proceso_estado[pro_sgte]: procesos.append("EFAC")    
+                case 3:
+                    if proceso_estado[pro_sgte]: procesos.append("FETR")
+                case 4:
+                    if proceso_estado[pro_sgte]: procesos.append("PJDX")
+                case 5:
+                    if proceso_estado[pro_sgte]: procesos.append("PMGD")
+                case 6:
+                    if proceso_estado[pro_sgte]: procesos.append("RCUT")
+                
+        anoi=int(self.root.ids.drop_item.current_item)     
+        mesi=mes_sel.index(self.root.ids.drop_item2.current_item)+1
+        anof=int(self.root.ids.drop_item_fn.current_item)     
+        mesf=mes_sel.index(self.root.ids.drop_item2_fn.current_item)+1
+        print("Proceso: ",procesos)
+        print("mes inicial: ",mesi)
+        print("año inicial: ",anoi)
+        print("mers final: ",mesf)
+        print("año final: ",anof)
+        print("Modo: ",MODO)
+        print("Destino: ",DESTINO)
+        ws_aa(procesos,mesi,anoi,mesf,anof,MODO,DESTINO)
 
     def test_state(self):
-
+        global MODO
 
 
         if self.root.ids.messw.active:
@@ -697,7 +733,7 @@ class GWS_AA(MDApp):
             self.root.ids.drop_item_fn.opacity = 0
             self.root.ids.mdlabelmes_fn.opacity = 0
             self.root.ids.drop_item2_fn.opacity = 0
-
+            MODO =False
             self.root.ids.mdlabelano.text = "Seleccione el AÑO"
             self.root.ids.mdlabelmes.text = "y el MES"
 
@@ -716,7 +752,7 @@ class GWS_AA(MDApp):
             self.root.ids.mdlabelmes_fn.opacity = 1
             self.root.ids.drop_item2_fn.opacity = 1
         
-
+            MODO =True
             currentDateTime = datetime.datetime.now()
             date = currentDateTime.date()
             year = date.strftime("%Y")
