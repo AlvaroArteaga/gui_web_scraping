@@ -29,7 +29,8 @@ def descarga(proceso_ejemplo, mes_ejemplo, ano_ejemplo, ruta):
     print("3")
     options.add_experimental_option("prefs",prefs)
     print("4")
-    service = Service('E:/GitHub/Coordinador_Electrico/2022/DBCD/gui_web_scraping/webdriver/chromedriver.exe')
+    service = Service('C:/GitHub/Coordinador_Electrico/2022/DBCD/gui_web_scraping/webdriver/chromedriver.exe')
+    #C:\Github\Coordinador_Electrico\2022\DBCD\gui_web_scraping\webdriver
     print("5")
     driver = webdriver.Chrome(service=service, options=options)
     print("6")
